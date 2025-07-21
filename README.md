@@ -51,6 +51,7 @@ This template provides a starting point for the bubble tea web interview exercis
 - **Functionality**:
   - Table displays all bubble tea information
   - Checkbox toggles list/unlist status for each bubble tea
+  - Updates the database dynamically
 
 ### Services
 

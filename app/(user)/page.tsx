@@ -8,21 +8,50 @@ import { useEffect, useState } from 'react';
 import { BubbleTeaService } from '../(services)/bubbleTeaService';
 import { type BubbleTea } from '@/dexie/db';
 
+function groupBubbleTeasByLabels(bubbleTeas: BubbleTea[]) {
+  const grouped: { [key: string]: BubbleTea[] } = {};
+
+  bubbleTeas.forEach((tea) => {
+    tea.labels?.forEach((label) => {
+      if (!grouped[label]) {
+        grouped[label] = [];
+      }
+      grouped[label].push(tea);
+    });
+  });
+
+  // Return grouped data as an array of objects
+  const groupedArray = Object.keys(grouped).map((label) => ({
+    label,
+    teas: grouped[label],
+  }));
+
+  // Sort the groups: "Popular" first, then the rest alphabetically
+  return groupedArray.sort((a, b) => {
+    if (a.label === 'popular') return -1; 
+    if (b.label === 'popular') return 1;
+    return a.label.localeCompare(b.label); 
+  });
+}
+
 export default function UserPage() {
-  const [bubbleTeas, setBubbleTeas] = useState<BubbleTea[]>([]);
+  const [groupedBubbleTeas, setGroupedBubbleTeas] = useState<
+    { label: string; teas: BubbleTea[] }[]
+  >([]);
 
   useEffect(() => {
     async function fetchBubbleTeas() {
       const data = await BubbleTeaService.getBubbleTeas();
-      setBubbleTeas(data);
-      console.log("data", data);
+      const listedBubbleTeas = data.filter((tea) => tea.isListed);
+      const grouped = groupBubbleTeasByLabels(listedBubbleTeas);
+      setGroupedBubbleTeas(grouped); 
+      console.log("Grouped Data", grouped);
     }
-
     fetchBubbleTeas();
   }, []);
 
-  const addToCart = () => {}
-  const removeFromCart = () =>{}
+  const addToCart = () => { }
+  const removeFromCart = () => { }
 
   return (
     <Container>
@@ -42,18 +71,38 @@ export default function UserPage() {
       </AppBar>
       <main >
         <Box sx={{ pt: 15 }}>
-          {bubbleTeas.map((tea) => (
-            <div key={tea.id}>
-                <div >
-                  <img src={tea.assetPath ? tea.assetPath : "/placeholder.jpg"} className="product-card-img" />
-                </div>
-                <p className="title ">{tea.name}</p>
+          {groupedBubbleTeas.map((group) => (
+            <div key={group.label}>
+              <h2>{group.label}</h2> 
+              <div className="group">
+                {group.teas.map((tea) => (
+                  <div key={tea.id}>
+                    <div>
+                      <img
+                        src={tea.assetPath ? tea.assetPath : '/placeholder.jpg'}
+                        className="product-card-img"
+                        width={20}
+                      />
+                    </div>
+                    <p className="title">{tea.name}</p>
 
-              <div className="container">
-                <p className="price">${tea.price?.toFixed(2)}</p>
-                <button onClick={addToCart} className="inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-stone-300 ring-inset hover:bg-gray-50">Add To Cart</button>
-                <button onClick={removeFromCart} className="inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-stone-300 ring-inset hover:bg-gray-50">Remove From Cart</button>
-
+                    <div className="container">
+                      <p className="price">${tea.price?.toFixed(2)}</p>
+                      <button
+                        onClick={addToCart}
+                        className="inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-stone-300 ring-inset hover:bg-gray-50"
+                      >
+                        Add To Cart
+                      </button>
+                      <button
+                        onClick={removeFromCart}
+                        className="inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-stone-300 ring-inset hover:bg-gray-50"
+                      >
+                        Remove From Cart
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
