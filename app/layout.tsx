@@ -6,6 +6,7 @@ import * as React from 'react';
 import { theme } from './theme';
 import { db } from './../dexie/db';
 import bubbleTeas from '../data/bubbleTeas.json';
+import './globals.css';
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   React.useEffect(() => {

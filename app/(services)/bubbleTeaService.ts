@@ -1,4 +1,5 @@
-import { db, type BubbleTea } from '@/dexie/db';
+import { db, type BubbleTea} from '@/dexie/db';
+
 
 export class BubbleTeaService {
   public static async getBubbleTeas() {

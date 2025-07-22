@@ -4,9 +4,6 @@
 
 This template provides a starting point for the bubble tea web interview exercise. Applicants are encouraged to make any necessary adjustments. The solution will be evaluated based on:
 
-- Feature completion
-- Code quality
-- Performance
 
 ## Tech Stack
 
@@ -46,8 +43,6 @@ This template provides a starting point for the bubble tea web interview exercis
 
 ### Admin Page
 
-> **UI already implemented but feel free to modify if needed**
-
 - **Functionality**:
   - Table displays all bubble tea information
   - Checkbox toggles list/unlist status for each bubble tea
@@ -60,6 +55,9 @@ This template provides a starting point for the bubble tea web interview exercis
 - **BubbleTeaService**:
   - Load bubble tea data from JSON file given into the table
   - Implement bubble tea list and delist feature
+
+- **CartTeaService**:
+  - Implement cart item add and delete feature
 
 ## Implementation Considerations
 

@@ -2,12 +2,12 @@ import Dexie, { type Table } from 'dexie';
 
 export const db = new Dexie('BubbleTeaDB') as Dexie & {
   bubbleTeas: Table<BubbleTea, number>;
-  cart: Table<CartItem, number>;
+  cartItems: Table<CartItem, number>;
 };
 
 db.version(1).stores({
-  bubbleTeas: '++id, name, isListed',
-  cart: 'id, quantity'
+  bubbleTeas: '++id, name, price, assetPath, isListed, labels',
+  cartItems: 'id, quantity, name, price',
 });
 
 export interface BubbleTea {
@@ -24,4 +24,6 @@ export interface BubbleTea {
 export interface CartItem {
   id: number;
   quantity: number;
+  price: number;
+  name: string;
 }
