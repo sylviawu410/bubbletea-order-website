@@ -2,7 +2,7 @@
 
 ## Overview
 
-This template provides a starting point for the bubble tea web interview exercise. Applicants are encouraged to make any necessary adjustments. The solution will be evaluated based on:
+This is a bubble tea ordering web development exercise.
 
 
 ## Tech Stack
@@ -50,8 +50,6 @@ This template provides a starting point for the bubble tea web interview exercis
 
 ### Services
 
-> **Add other services if needed**
-
 - **BubbleTeaService**:
   - Load bubble tea data from JSON file given into the table
   - Implement bubble tea list and delist feature
@@ -63,7 +61,7 @@ This template provides a starting point for the bubble tea web interview exercis
 
 - UI/UX design quality
 - Database schema and query design
-- Performance optimization
+- Performance optimisation
 
 ## Folder Structure
 
@@ -74,6 +72,3 @@ This template provides a starting point for the bubble tea web interview exercis
 /public # Assets
 ```
 
-## Notes
-
-Feel free to modify this template as needed to best showcase your skills and approach to the problem.
